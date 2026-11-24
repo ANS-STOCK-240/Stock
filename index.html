@@ -1668,7 +1668,7 @@
       // 1. Check Stock Query (e.g., "stock ANS-12", "ANS-12 er stock koto", "ANS-12?")
       const queryMatch = lower.match(/\bans[-\s]?(\d{1,3})\b.*?(?:stock|koto|ache|\?)/i) || 
                          lower.match(/^(?:stock|check)\s+ans[-\s]?(\d{1,3})$/i);
-      if (queryMatch && !/\b(add|remove|minus|in|out|jog|bad|sell)\b/i.test(lower)) {
+      if (queryMatch && !/\b(add|remove|minus|in|out|jog|bad|sell|koro|dao)\b/i.test(lower)) {
         const num = parseInt(queryMatch[1], 10);
         if (num >= 1 && num <= TOTAL_DESIGNS) {
           return { type: 'query', code: `ANS-${num}` };
@@ -1708,31 +1708,35 @@
       }
       if (!matchedColor) return null;
 
-      // 5. Determine Action (+ or -) from Banglish/English keywords
-      const isAdd = /\b(add|in|restock|plus|jog|dhukao|bariye|barao|entry)\b/i.test(lower) || lower.includes('+');
-      const isRemove = /\b(remove|minus|out|sell|sold|bad|komao|komiye|cut|delete|cancel)\b/i.test(lower) || lower.includes('-');
+      // 5. Determine Action (+ or -) clearly
+      const hasPlus = /(?:^|\s)\+\s*\d+/.test(lower);
+      const hasMinus = /(?:^|\s)-\s*\d+/.test(lower);
+      const isAdd = hasPlus || /\b(add|in|restock|plus|jog|dhukao|bariye|barao|entry)\b/i.test(lower);
+      const isRemove = hasMinus || /\b(remove|minus|out|sell|sold|bad|komao|komiye|delete|cancel)\b/i.test(lower);
 
-      // 6. Extract Quantity (e.g., "5 ta", "3 pis", "+5", "-3", or number)
+      // 6. Extract Quantity (e.g., "5 ta", "3 pis", "+5", "-3")
       let cleanedForQty = lower
-        .replace(/\bans[-\s]?\d{1,3}\b/g, '')
-        .replace(/\b(35|36|37|38|39|40|41)\b/g, '');
+        .replace(/\bans[-\s]?\d{1,3}\b/g, ' ')
+        .replace(/\b(35|36|37|38|39|40|41)\b/g, ' ');
 
       let qty = 1;
-      const signedMatch = cleanedForQty.match(/([+-])\s*(\d+)/);
-      const qtyUnitMatch = cleanedForQty.match(/(\d+)\s*(?:ta|ti|pis|pcs|pair|jora)?\b/);
+      const signedMatch = cleanedForQty.match(/(?:^|\s)([+-])\s*(\d+)\b/);
+      const qtyUnitMatch = cleanedForQty.match(/\b(\d+)\s*(?:ta|ti|pis|pcs|pair|jora)?\b/);
 
       if (signedMatch) {
-        qty = parseInt(signedMatch[2], 10);
+        qty = Math.max(1, parseInt(signedMatch[2], 10));
       } else if (qtyUnitMatch) {
-        qty = parseInt(qtyUnitMatch[1], 10);
+        qty = Math.max(1, parseInt(qtyUnitMatch[1], 10));
       }
 
       let delta = -qty;
-      if (signedMatch && signedMatch[1] === '+') {
+      if (isAdd && !isRemove) {
         delta = qty;
-      } else if (isAdd && !isRemove) {
+      } else if (isRemove && !isAdd) {
+        delta = -qty;
+      } else if (hasPlus) {
         delta = qty;
-      } else if (isRemove) {
+      } else if (hasMinus) {
         delta = -qty;
       }
 
