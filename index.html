@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A & S FASHION — Footwear Stock Manager (ANS-1 to ANS-246)</title>
+  <title>A & S FASHION — Footwear Stock Manager (ANS-1 to ANS-247)</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -76,7 +76,7 @@
           <h1 class="text-lg font-bold tracking-tight text-white flex items-center gap-2">
             A & S FASHION 
             <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-400 border border-rose-500/30">
-              ANS-1 to ANS-246
+              ANS-1 to ANS-247
             </span>
           </h1>
           <p class="text-xs text-slate-400 flex items-center flex-wrap gap-2">
@@ -141,8 +141,8 @@
       <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex items-center justify-between shadow-sm">
         <div>
           <p class="text-xs text-slate-400 font-medium">মোট ডিজাইন (Codes)</p>
-          <p id="kpi-total-designs" class="text-2xl font-extrabold text-white mt-0.5">246</p>
-          <p class="text-[11px] text-slate-500 mt-1">ANS-1 — ANS-246</p>
+          <p id="kpi-total-designs" class="text-2xl font-extrabold text-white mt-0.5">247</p>
+          <p class="text-[11px] text-slate-500 mt-1">ANS-1 — ANS-247</p>
         </div>
         <div class="p-3 bg-blue-500/10 rounded-xl text-blue-400 border border-blue-500/20">
           <i data-lucide="package" class="w-6 h-6"></i>
@@ -177,7 +177,7 @@
       <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex items-center justify-between shadow-sm">
         <div>
           <p class="text-xs text-slate-400 font-medium">স্টক শেষ (Out of Stock)</p>
-          <p id="kpi-out-of-stock" class="text-2xl font-extrabold text-rose-500 mt-0.5">246</p>
+          <p id="kpi-out-of-stock" class="text-2xl font-extrabold text-rose-500 mt-0.5">247</p>
           <p class="text-[11px] text-rose-500/80 mt-1">০ পিস স্টক আছে</p>
         </div>
         <div class="p-3 bg-rose-500/10 rounded-xl text-rose-400 border border-rose-500/20">
@@ -197,7 +197,7 @@
             type="text" 
             id="search-input"
             oninput="handleSearchInput()" 
-            placeholder="ডিজাইন কোড বা নোট দিয়ে খুঁজুন (যেমন: ANS-42, ANS-245, Heel)..." 
+            placeholder="ডিজাইন কোড বা নোট দিয়ে খুঁজুন (যেমন: ANS-42, ANS-247, Heel)..." 
             class="w-full pl-10 pr-4 py-2 bg-slate-950 border border-slate-700 rounded-lg text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-rose-500 focus:ring-1 focus:ring-rose-500 transition"
           >
           <button id="search-clear-btn" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300">
@@ -213,8 +213,8 @@
             type="number" 
             id="jump-code-input" 
             min="1" 
-            max="246" 
-            placeholder="1-246" 
+            max="247" 
+            placeholder="1-247" 
             onkeydown="if(event.key==='Enter') jumpToCode()"
             class="w-16 bg-slate-900 border border-slate-700 rounded px-2 py-1 text-xs text-white text-center focus:outline-none focus:border-rose-500"
           >
@@ -255,7 +255,7 @@
             <option value="24" selected>২৪ টি কার্ড / পেজ</option>
             <option value="48">৪৮ টি কার্ড / পেজ</option>
             <option value="96">৯৬ টি কার্ড / পেজ</option>
-            <option value="246">সব ২৪৬ টি একসাথে</option>
+            <option value="247">সব ২৪৭ টি একসাথে</option>
           </select>
         </div>
 
@@ -273,7 +273,7 @@
     <!-- PAGINATION BAR (TOP) -->
     <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">
       <div id="pagination-info" class="font-medium">
-        দেখাচ্ছে ১-২৪ (মোট ২৪৬টি ডিজাইন)
+        দেখাচ্ছে ১-২৪ (মোট ২৪৭টি ডিজাইন)
       </div>
       <div id="pagination-controls" class="flex items-center space-x-1">
         <!-- Buttons rendered dynamically -->
@@ -288,7 +288,7 @@
     <!-- PAGINATION BAR (BOTTOM) -->
     <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400 pt-4 border-t border-slate-800">
       <div id="pagination-info-bottom" class="font-medium">
-        দেখাচ্ছে ১-২৪ (মোট ২৪৬টি ডিজাইন)
+        দেখাচ্ছে ১-২৪ (মোট ২৪৭টি ডিজাইন)
       </div>
       <div id="pagination-controls-bottom" class="flex items-center space-x-1">
         <!-- Buttons rendered dynamically -->
@@ -568,7 +568,7 @@
   <!-- ================= JAVASCRIPT APP LOGIC ================= -->
   <script>
     // --- 1. CONFIGURATION & DATA CONSTANTS ---
-    const TOTAL_DESIGNS = 246;
+    const TOTAL_DESIGNS = 247;
     const SIZES = [35, 36, 37, 38, 39, 40, 41];
     const DEFAULT_TG_TOKEN = '9222460841:AAHyVfwt8axtxmNkG7kw9s4xN8pS3uctsTI';
     const REPO_IMAGE_FOLDER = 'images';
