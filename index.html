@@ -294,13 +294,13 @@
         <div class="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1.5 text-[11px] text-slate-400">
           <p class="font-bold text-slate-200">কীভাবে সবার পেজে একসাথে স্টক দেখাবে?</p>
           <p>১. <span class="text-indigo-300">console.firebase.google.com</span>-এ একটি ফ্রি প্রজেক্ট খুলে <b>Realtime Database</b> চালু করুন।</p>
-          <p>২. Database URL কপি করে নিচে দিন (যেমন: <span class="font-mono text-slate-300">https://xxx-default-rtdb.firebaseio.com</span>)।</p>
+          <p>২. Database URL কপি করে নিচে দিন (যেমন: <span class="font-mono text-slate-300">https://ans-stock-default-rtdb.firebaseio.com</span>)[cite: 4]।</p>
           <p>৩. একজনের পেজে সেভ করলেই সবাইকে একই URL দিলে বা কোডে বসালে সবার ব্রাউজারে রিয়েল-টাইম আপডেট হবে।</p>
         </div>
 
         <div class="space-y-1.5">
           <label class="block font-semibold text-slate-300">Firebase Realtime Database URL:</label>
-          <input type="url" id="cloud-db-url-input" placeholder="https://your-project-default-rtdb.firebaseio.com" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-slate-200 focus:outline-none focus:border-indigo-500">
+          <input type="url" id="cloud-db-url-input" placeholder="https://ans-stock-default-rtdb.firebaseio.com" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-slate-200 focus:outline-none focus:border-indigo-500">
         </div>
 
         <div class="space-y-1.5">
@@ -531,8 +531,8 @@
     const DEFAULT_TG_TOKEN = '9222460841:AAHyVfwt8axtxmNkG7kw9s4xN8pS3uctsTI';
     const REPO_IMAGE_FOLDER = 'images';
 
-    // চাইলে এখানে সবার জন্য default Firebase Realtime DB URL বসিয়ে GitHub-এ push করতে পারেন
-    const DEFAULT_CLOUD_URL = '';
+    // সবার জন্য Default Firebase Realtime DB URL সেট করা হলো
+    const DEFAULT_CLOUD_URL = 'https://ans-stock-default-rtdb.firebaseio.com';
     const DEFAULT_CLOUD_ROOM = 'as_fashion_main';
 
     const COLORS = [
@@ -559,10 +559,11 @@
     let cloudConfig = {
       dbUrl: DEFAULT_CLOUD_URL,
       room: DEFAULT_CLOUD_ROOM,
-      enabled: false
+      enabled: true
     };
     let cloudEventSource = null;
     let isApplyingRemoteCloud = false;
+    let cloudWriteQueue = Promise.resolve();
 
     let tgConfig = {
       token: DEFAULT_TG_TOKEN,
@@ -693,9 +694,10 @@
         const savedCloud = localStorage.getItem('as_fashion_cloud_v1');
         if (savedCloud) {
           cloudConfig = { ...cloudConfig, ...JSON.parse(savedCloud) };
-        } else if (DEFAULT_CLOUD_URL) {
+        }
+        if (!cloudConfig.dbUrl && DEFAULT_CLOUD_URL) {
           cloudConfig.dbUrl = DEFAULT_CLOUD_URL;
-          cloudConfig.room = DEFAULT_CLOUD_ROOM;
+          cloudConfig.room = cloudConfig.room || DEFAULT_CLOUD_ROOM;
           cloudConfig.enabled = true;
         }
       } catch (err) {
@@ -719,8 +721,9 @@
       updateKPIs();
       updateLogBadge();
       if (pushCloud && !isApplyingRemoteCloud) {
-        syncStateToCloud();
+        return syncStateToCloud();
       }
+      return Promise.resolve();
     }
 
     // --- 5. SHARED CLOUD SYNC (FIREBASE REALTIME DB REST + SSE) ---
@@ -780,30 +783,37 @@
       }
     }
 
-    async function syncStateToCloud() {
+    function syncStateToCloud() {
       const endpoint = getCloudEndpoint();
-      if (!endpoint) return;
-      try {
-        const payload = {
-          stockData,
-          notesData,
-          activityLogs,
-          tgConfig: {
-            chatId: tgConfig.chatId,
-            lastUpdateId: tgConfig.lastUpdateId
-          },
-          updatedAt: Date.now()
-        };
-        await fetch(endpoint, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        updateCloudStatusUI('Live Team Sync', 'bg-emerald-400');
-      } catch (err) {
-        console.error('Cloud push error:', err);
-        updateCloudStatusUI('Sync Error', 'bg-rose-400');
-      }
+      if (!endpoint) return Promise.resolve();
+
+      const payload = {
+        stockData,
+        notesData,
+        activityLogs,
+        tgConfig: {
+          chatId: tgConfig.chatId,
+          lastUpdateId: tgConfig.lastUpdateId
+        },
+        updatedAt: Date.now()
+      };
+
+      cloudWriteQueue = cloudWriteQueue.then(async () => {
+        try {
+          const res = await fetch(endpoint, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          if (!res.ok) throw new Error('Cloud write failed');
+          updateCloudStatusUI('Live Team Sync', 'bg-emerald-400');
+        } catch (err) {
+          console.error('Cloud push error:', err);
+          updateCloudStatusUI('Sync Error', 'bg-rose-400');
+        }
+      });
+
+      return cloudWriteQueue;
     }
 
     async function pushLocalToCloud() {
@@ -816,7 +826,7 @@
       cloudConfig.dbUrl = urlVal;
       cloudConfig.room = roomVal;
       cloudConfig.enabled = true;
-      saveToLocalStorage(false);
+      await saveToLocalStorage(false);
       await syncStateToCloud();
       initCloudSync();
       alert('লোকাল ডাটা ক্লাউডে পুশ করা হয়েছে!');
@@ -832,7 +842,7 @@
       cloudConfig.dbUrl = urlVal;
       cloudConfig.room = roomVal;
       cloudConfig.enabled = true;
-      saveToLocalStorage(false);
+      await saveToLocalStorage(false);
       initCloudSync();
       closeCloudModal();
     }
@@ -1801,7 +1811,7 @@
         return;
       }
       tgConfig.chatId = chatId;
-      saveToLocalStorage(true);
+      await saveToLocalStorage(true);
       await sendTelegramMessage(chatId, '✅ A & S FASHION Stock Bot connected! উদাহরণ: ANS-12, Black, 38');
       alert('Test message sent!');
     }
@@ -1942,6 +1952,8 @@
               const nextStock = setStock(parsed.code, parsed.size, parsed.color, prevStock + parsed.delta, true, 'TG');
               anyStockChanged = true;
 
+              await saveToLocalStorage(true);
+
               const signText = parsed.delta >= 0 ? `+${parsed.delta}` : `${parsed.delta}`;
               await sendTelegramMessage(
                 chatId,
@@ -1950,7 +1962,7 @@
             }
           }
 
-          saveToLocalStorage(true);
+          await saveToLocalStorage(true);
           if (anyStockChanged) {
             applyFilters();
           }
