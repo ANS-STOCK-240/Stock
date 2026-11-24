@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>A & S FASHION — Footwear Stock Manager (ANS-1 to ANS-244)</title>
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -26,14 +27,17 @@
       }
     };
   </script>
+  <!-- Google Fonts: Inter & Hind Siliguri for Bengali typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Lucide Icons CDN -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     body {
       font-family: 'Inter', 'Hind Siliguri', sans-serif;
     }
+    /* Custom Scrollbars */
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
@@ -75,11 +79,11 @@
               ANS-1 to ANS-244
             </span>
           </h1>
-          <p class="text-xs text-slate-400 flex items-center gap-2">
+          <p class="text-xs text-slate-400 flex items-center flex-wrap gap-2">
             <span>ঈদ স্পেশাল ডিজিটাল জুতার স্টক ম্যানেজমেন্ট সিস্টেম</span>
-            <span id="cloud-sync-badge" class="inline-flex items-center gap-1 px-2 py-0.2 rounded-full text-[10px] font-semibold bg-amber-500/15 text-amber-300 border border-amber-500/30">
+            <span id="cloud-sync-badge" class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-500/15 text-amber-300 border border-amber-500/30">
               <span id="cloud-dot" class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-              <span id="cloud-status-text">Local Only</span>
+              <span id="cloud-status-text">Connecting Cloud...</span>
             </span>
           </p>
         </div>
@@ -87,7 +91,7 @@
 
       <!-- Action Buttons -->
       <div class="flex items-center flex-wrap gap-2">
-        <!-- Cloud Sync Config Button -->
+        <!-- Team Cloud Sync Config Button -->
         <button onclick="openCloudModal()" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-300 border border-indigo-500/30 flex items-center gap-1.5 transition">
           <i data-lucide="cloud" class="w-4 h-4 text-indigo-400"></i>
           <span>Team Cloud Sync</span>
@@ -113,7 +117,7 @@
           <span>Export Excel/CSV</span>
         </button>
 
-        <!-- Backup & Restore -->
+        <!-- Backup & Restore Dropdown/Modal -->
         <button onclick="openBackupModal()" class="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1.5 transition">
           <i data-lucide="database" class="w-4 h-4 text-blue-400"></i>
           <span>Backup / Restore</span>
@@ -133,6 +137,7 @@
 
     <!-- KPI STATS OVERVIEW -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <!-- Total Designs -->
       <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex items-center justify-between shadow-sm">
         <div>
           <p class="text-xs text-slate-400 font-medium">মোট ডিজাইন (Codes)</p>
@@ -144,6 +149,7 @@
         </div>
       </div>
 
+      <!-- Total Pairs Stocked -->
       <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex items-center justify-between shadow-sm">
         <div>
           <p class="text-xs text-slate-400 font-medium">মোট জুতার স্টক (Pairs)</p>
@@ -155,6 +161,7 @@
         </div>
       </div>
 
+      <!-- Low Stock Items (< 5 pairs) -->
       <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex items-center justify-between shadow-sm">
         <div>
           <p class="text-xs text-slate-400 font-medium">লো স্টক ডিজাইন (< 5 পিস)</p>
@@ -166,6 +173,7 @@
         </div>
       </div>
 
+      <!-- Out of Stock Designs (0 pairs) -->
       <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex items-center justify-between shadow-sm">
         <div>
           <p class="text-xs text-slate-400 font-medium">স্টক শেষ (Out of Stock)</p>
@@ -182,6 +190,7 @@
     <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 space-y-4 shadow-sm">
       <div class="flex flex-col lg:flex-row gap-3 items-stretch lg:items-center justify-between">
         
+        <!-- Search Input -->
         <div class="relative flex-1 min-w-[240px]">
           <i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"></i>
           <input 
@@ -196,6 +205,7 @@
           </button>
         </div>
 
+        <!-- Direct Jump to Code -->
         <div class="flex items-center gap-1.5 bg-slate-950 border border-slate-700 rounded-lg p-1 px-2">
           <span class="text-xs text-slate-400 whitespace-nowrap pl-1">Jump to Code:</span>
           <span class="text-xs font-semibold text-slate-400">ANS-</span>
@@ -213,7 +223,9 @@
           </button>
         </div>
 
+        <!-- Filter Dropdowns -->
         <div class="flex flex-wrap items-center gap-2">
+          <!-- Stock Filter -->
           <select id="filter-stock-status" onchange="applyFilters()" class="bg-slate-950 border border-slate-700 rounded-lg text-xs py-2 px-3 text-slate-200 focus:outline-none focus:border-rose-500">
             <option value="all">সব স্টক ফিল্টার</option>
             <option value="in_stock">শুধুমাত্র স্টক আছে (Stock > 0)</option>
@@ -221,6 +233,7 @@
             <option value="out_of_stock">স্টক শেষ (0 পিস)</option>
           </select>
 
+          <!-- Color Filter -->
           <select id="filter-color" onchange="applyFilters()" class="bg-slate-950 border border-slate-700 rounded-lg text-xs py-2 px-3 text-slate-200 focus:outline-none focus:border-rose-500">
             <option value="all">সব কালার</option>
             <option value="Black">Black</option>
@@ -236,6 +249,7 @@
             <option value="Rose Gold">Rose Gold</option>
           </select>
 
+          <!-- Page Size -->
           <select id="page-size-select" onchange="changePageSize()" class="bg-slate-950 border border-slate-700 rounded-lg text-xs py-2 px-3 text-slate-200 focus:outline-none focus:border-rose-500">
             <option value="12">১২ টি কার্ড / পেজ</option>
             <option value="24" selected>২৪ টি কার্ড / পেজ</option>
@@ -247,25 +261,38 @@
 
       </div>
 
+      <!-- Quick Color Legend Swatches -->
       <div class="pt-2 border-t border-slate-800/80 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate-400">
         <span class="font-semibold text-slate-300">১১টি কালার লিস্ট:</span>
-        <div id="color-legend-container" class="flex flex-wrap items-center gap-2"></div>
+        <div id="color-legend-container" class="flex flex-wrap items-center gap-2">
+          <!-- Dynamically populated color swatches -->
+        </div>
       </div>
     </div>
 
     <!-- PAGINATION BAR (TOP) -->
     <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400">
-      <div id="pagination-info" class="font-medium">দেখাচ্ছে ১-২৪ (মোট ২৪৪টি ডিজাইন)</div>
-      <div id="pagination-controls" class="flex items-center space-x-1"></div>
+      <div id="pagination-info" class="font-medium">
+        দেখাচ্ছে ১-২৪ (মোট ২৪৪টি ডিজাইন)
+      </div>
+      <div id="pagination-controls" class="flex items-center space-x-1">
+        <!-- Buttons rendered dynamically -->
+      </div>
     </div>
 
     <!-- CARDS GRID CONTAINER -->
-    <div id="cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"></div>
+    <div id="cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+      <!-- Dynamic Design Cards will be rendered here -->
+    </div>
 
     <!-- PAGINATION BAR (BOTTOM) -->
     <div class="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-400 pt-4 border-t border-slate-800">
-      <div id="pagination-info-bottom" class="font-medium">দেখাচ্ছে ১-২৪ (মোট ২৪৪টি ডিজাইন)</div>
-      <div id="pagination-controls-bottom" class="flex items-center space-x-1"></div>
+      <div id="pagination-info-bottom" class="font-medium">
+        দেখাচ্ছে ১-২৪ (মোট ২৪৪টি ডিজাইন)
+      </div>
+      <div id="pagination-controls-bottom" class="flex items-center space-x-1">
+        <!-- Buttons rendered dynamically -->
+      </div>
     </div>
 
   </main>
@@ -292,10 +319,10 @@
 
       <div class="space-y-3 text-xs">
         <div class="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1.5 text-[11px] text-slate-400">
-          <p class="font-bold text-slate-200">কীভাবে সবার পেজে একসাথে স্টক দেখাবে?</p>
-          <p>১. <span class="text-indigo-300">console.firebase.google.com</span>-এ একটি ফ্রি প্রজেক্ট খুলে <b>Realtime Database</b> চালু করুন।</p>
-          <p>২. Database URL কপি করে নিচে দিন (যেমন: <span class="font-mono text-slate-300">https://ans-stock-default-rtdb.firebaseio.com</span>)[cite: 4]।</p>
-          <p>৩. একজনের পেজে সেভ করলেই সবাইকে একই URL দিলে বা কোডে বসালে সবার ব্রাউজারে রিয়েল-টাইম আপডেট হবে।</p>
+          <p class="font-bold text-slate-200">সবাই একই স্টক লাইভ দেখতে পারবে:</p>
+          <p>• আপনার Firebase Realtime Database URL (<span class="font-mono text-indigo-300">https://ans-stock-default-rtdb.firebaseio.com</span>) কোডে ডিফল্ট হিসেবে সেট করা আছে।</p>
+          <p>• কেউ স্টক, নোট বা হিস্ট্রি চেঞ্জ করলে তা ক্লাউডে সেভ হবে এবং বাকি সবার পেজে অটোমেটিক লাইভ আপডেট হবে।</p>
+          <p>• পুরনো ব্রাউজার স্টকের ডাটা ক্লাউডে পাঠাতে চাইলে <b>Push Local Data</b> চাপুন।</p>
         </div>
 
         <div class="space-y-1.5">
@@ -308,9 +335,11 @@
           <input type="text" id="cloud-room-input" placeholder="as_fashion_main" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-slate-200 focus:outline-none focus:border-indigo-500">
         </div>
 
+        <div id="cloud-error-hint" class="hidden p-2.5 rounded-lg bg-rose-950/50 border border-rose-500/30 text-[11px] text-rose-300"></div>
+
         <div class="flex items-center justify-between gap-2 pt-2 border-t border-slate-800">
-          <button onclick="disableCloudSync()" class="px-3 py-1.5 bg-slate-800 hover:bg-rose-900/50 text-rose-300 rounded-lg text-xs font-semibold">
-            Disable Cloud
+          <button onclick="resetCloudToDefault()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-semibold">
+            Reset Default
           </button>
           <div class="flex items-center gap-2">
             <button onclick="pushLocalToCloud()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-semibold">
@@ -362,13 +391,13 @@
         </div>
 
         <div class="space-y-1.5">
-          <label class="block font-semibold text-slate-300">আপনার Chat ID (সব টিম মেম্বার একই Chat/Group ID দিলে সবাই সিঙ্ক পাবে):</label>
+          <label class="block font-semibold text-slate-300">আপনার Chat ID (বটে মেসেজ দিলে অটো আসবে বা লিখুন):</label>
           <input type="text" id="tg-chat-id-input" placeholder="e.g. 123456789" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-slate-200 focus:outline-none focus:border-sky-500">
         </div>
 
         <div class="flex items-center gap-2 pt-1">
           <input type="checkbox" id="tg-poll-enabled" class="rounded bg-slate-950 border-slate-700 text-sky-500">
-          <label for="tg-poll-enabled" class="text-[11px] text-slate-300">এই ব্রাউজার থেকে Telegram Polling চালু রাখুন (Cloud চালু থাকলে ১টি ব্রাউজারে রাখাই ভালো)</label>
+          <label for="tg-poll-enabled" class="text-[11px] text-slate-300">এই ব্রাউজার থেকে Telegram Polling চালু রাখুন (একাধিক ডিভাইস থাকলে শুধু ১টিতে চালু রাখুন)</label>
         </div>
 
         <div class="p-3 rounded-lg bg-slate-950 border border-slate-800 space-y-1 text-[11px] text-slate-400">
@@ -397,11 +426,13 @@
     </div>
   </div>
 
-  <!-- ================= ACTIVITY LOG DRAWER ================= -->
+  <!-- ================= ACTIVITY LOG DRAWER (SLIDE OVER) ================= -->
   <div id="log-drawer" class="fixed inset-0 z-50 overflow-hidden pointer-events-none">
     <div id="log-backdrop" onclick="toggleLogDrawer()" class="absolute inset-0 bg-slate-950/60 backdrop-blur-sm opacity-0 transition-opacity duration-300 pointer-events-auto hidden"></div>
     <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
       <div id="log-panel" class="w-screen max-w-md bg-slate-900 border-l border-slate-800 shadow-2xl flex flex-col pointer-events-auto transform translate-x-full transition-transform duration-300 ease-in-out">
+        
+        <!-- Header -->
         <div class="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-950">
           <div class="flex items-center gap-2">
             <i data-lucide="history" class="w-5 h-5 text-amber-400"></i>
@@ -412,6 +443,7 @@
           </button>
         </div>
 
+        <!-- Undo Last Action Banner -->
         <div class="p-3 bg-amber-500/10 border-b border-amber-500/20 flex items-center justify-between">
           <span class="text-xs text-amber-300">ভুল এন্ট্রি হলে লাস্ট একশন আনডু করুন</span>
           <button onclick="undoLastAction()" id="btn-undo" class="px-2.5 py-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded text-xs transition flex items-center gap-1 disabled:opacity-50">
@@ -420,19 +452,24 @@
           </button>
         </div>
 
-        <div id="log-list" class="flex-1 overflow-y-auto p-4 space-y-2.5 text-xs"></div>
+        <!-- Log List -->
+        <div id="log-list" class="flex-1 overflow-y-auto p-4 space-y-2.5 text-xs">
+          <!-- Log items injected here -->
+        </div>
 
+        <!-- Footer -->
         <div class="p-3 border-t border-slate-800 bg-slate-950 flex justify-between items-center">
           <button onclick="clearActivityLog()" class="text-xs text-rose-400 hover:underline">
             হিস্ট্রি ক্লিয়ার করুন
           </button>
           <span class="text-[11px] text-slate-500">স্বয়ংক্রিয়ভাবে সংরক্ষিত</span>
         </div>
+
       </div>
     </div>
   </div>
 
-  <!-- ================= IMAGE UPLOAD MODAL ================= -->
+  <!-- ================= IMAGE UPLOAD / CHANGE MODAL ================= -->
   <div id="image-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop hidden">
     <div class="bg-slate-900 border border-slate-700 rounded-xl w-full max-w-md p-5 space-y-4 shadow-2xl">
       <div class="flex items-center justify-between border-b border-slate-800 pb-3">
@@ -445,6 +482,7 @@
         </button>
       </div>
 
+      <!-- Current Image Preview -->
       <div class="flex justify-center">
         <div class="w-32 h-32 rounded-lg bg-slate-950 border border-slate-800 overflow-hidden flex items-center justify-center relative group">
           <img id="image-preview" src="" class="w-full h-full object-cover hidden">
@@ -455,6 +493,7 @@
         </div>
       </div>
 
+      <!-- Tab 1: File Upload -->
       <div class="space-y-2">
         <label class="block text-xs font-semibold text-slate-300">গ্যালারি / ডিভাইস থেকে ছবি আপলোড করুন:</label>
         <input type="file" id="image-file-input" accept="image/*" class="w-full text-xs text-slate-400 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-rose-600 file:text-white hover:file:bg-rose-500 cursor-pointer">
@@ -462,6 +501,7 @@
 
       <div class="text-center text-xs text-slate-500 font-semibold">— অথবা —</div>
 
+      <!-- Tab 2: Image URL -->
       <div class="space-y-2">
         <label class="block text-xs font-semibold text-slate-300">ইন্টারনেট ছবির লিংক (URL):</label>
         <input type="url" id="image-url-input" placeholder="https://example.com/shoe-black.jpg" class="w-full px-3 py-2 bg-slate-950 border border-slate-700 rounded-lg text-xs text-white focus:outline-none focus:border-rose-500">
@@ -495,6 +535,7 @@
       </div>
 
       <div class="space-y-4 text-xs">
+        <!-- Export Box -->
         <div class="p-3 bg-slate-950 border border-slate-800 rounded-lg space-y-2">
           <h4 class="font-bold text-slate-200">১. ডাটা ব্যাকআপ ডাউনলোড করুন</h4>
           <p class="text-slate-400">আপনার সব স্টক এন্ট্রি ও নোট ব্যাকআপ ফাইল হিসেবে সেভ করে রাখুন।</p>
@@ -504,6 +545,7 @@
           </button>
         </div>
 
+        <!-- Import Box -->
         <div class="p-3 bg-slate-950 border border-slate-800 rounded-lg space-y-2">
           <h4 class="font-bold text-slate-200">২. ব্যাকআপ ফাইল রিস্টোর করুন</h4>
           <p class="text-slate-400">পূর্বে ডাউনলোড করা JSON ফাইল সিলেক্ট করে সমস্ত তথ্য পুনরুদ্ধার করুন।</p>
@@ -531,10 +573,11 @@
     const DEFAULT_TG_TOKEN = '9222460841:AAHyVfwt8axtxmNkG7kw9s4xN8pS3uctsTI';
     const REPO_IMAGE_FOLDER = 'images';
 
-    // সবার জন্য Default Firebase Realtime DB URL সেট করা হলো
+    // Firebase Realtime Database configuration
     const DEFAULT_CLOUD_URL = 'https://ans-stock-default-rtdb.firebaseio.com';
     const DEFAULT_CLOUD_ROOM = 'as_fashion_main';
 
+    // Requested 11 Colors with Swatch Display Styles
     const COLORS = [
       { name: 'Black', hex: '#18181b', textColor: '#ffffff', border: false },
       { name: 'Full white', hex: '#ffffff', textColor: '#0f172a', border: true },
@@ -562,8 +605,10 @@
       enabled: true
     };
     let cloudEventSource = null;
+    let cloudPollTimer = null;
     let isApplyingRemoteCloud = false;
     let cloudWriteQueue = Promise.resolve();
+    let lastCloudSnapshotJson = '';
 
     let tgConfig = {
       token: DEFAULT_TG_TOKEN,
@@ -575,6 +620,7 @@
     let tgPollTimer = null;
     let isSyncingTelegram = false;
 
+    // Pagination & Search State
     let currentPage = 1;
     let pageSize = 24;
     let filteredCodes = [];
@@ -595,7 +641,10 @@
           db = e.target.result;
           resolve(db);
         };
-        request.onerror = () => resolve(null);
+        request.onerror = (e) => {
+          console.error('IndexedDB Error:', e);
+          resolve(null);
+        };
       });
     }
 
@@ -695,9 +744,13 @@
         if (savedCloud) {
           cloudConfig = { ...cloudConfig, ...JSON.parse(savedCloud) };
         }
-        if (!cloudConfig.dbUrl && DEFAULT_CLOUD_URL) {
+        if (!cloudConfig.dbUrl) {
           cloudConfig.dbUrl = DEFAULT_CLOUD_URL;
-          cloudConfig.room = cloudConfig.room || DEFAULT_CLOUD_ROOM;
+        }
+        if (!cloudConfig.room) {
+          cloudConfig.room = DEFAULT_CLOUD_ROOM;
+        }
+        if (cloudConfig.enabled === undefined || cloudConfig.enabled === null) {
           cloudConfig.enabled = true;
         }
       } catch (err) {
@@ -726,33 +779,50 @@
       return Promise.resolve();
     }
 
-    // --- 5. SHARED CLOUD SYNC (FIREBASE REALTIME DB REST + SSE) ---
+    // --- 5. SHARED CLOUD SYNC (FIREBASE REALTIME DB REST + SSE + FALLBACK POLL) ---
     function getCloudEndpoint() {
       if (!cloudConfig.enabled || !cloudConfig.dbUrl) return null;
       const cleanUrl = cloudConfig.dbUrl.trim().replace(/\/+$/, '');
-      const room = encodeURIComponent((cloudConfig.room || 'as_fashion_main').trim());
+      const room = encodeURIComponent((cloudConfig.room || DEFAULT_CLOUD_ROOM).trim());
       return `${cleanUrl}/rooms/${room}.json`;
     }
 
-    function updateCloudStatusUI(stateText = null, colorClass = null) {
+    function updateCloudStatusUI(stateText = null, colorClass = null, errorDetail = '') {
       const dot = document.getElementById('cloud-dot');
       const textEl = document.getElementById('cloud-status-text');
       const badge = document.getElementById('cloud-sync-badge');
+      const hintEl = document.getElementById('cloud-error-hint');
 
       if (!cloudConfig.enabled || !cloudConfig.dbUrl) {
         if (dot) dot.className = 'w-1.5 h-1.5 rounded-full bg-amber-400';
         if (textEl) textEl.textContent = 'Local Only';
-        if (badge) badge.className = 'inline-flex items-center gap-1 px-2 py-0.2 rounded-full text-[10px] font-semibold bg-amber-500/15 text-amber-300 border border-amber-500/30';
+        if (badge) badge.className = 'inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-500/15 text-amber-300 border border-amber-500/30';
+        if (hintEl) hintEl.classList.add('hidden');
         return;
       }
 
-      if (dot) dot.className = `w-1.5 h-1.5 rounded-full ${colorClass || 'bg-emerald-400'}`;
-      if (textEl) textEl.textContent = stateText || 'Live Team Sync';
-      if (badge) badge.className = 'inline-flex items-center gap-1 px-2 py-0.2 rounded-full text-[10px] font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30';
+      const label = stateText || 'Live Team Sync';
+      const isError = label.toLowerCase().includes('error');
+      if (dot) dot.className = `w-1.5 h-1.5 rounded-full ${colorClass || (isError ? 'bg-rose-400' : 'bg-emerald-400')}`;
+      if (textEl) textEl.textContent = label;
+      if (badge) {
+        badge.className = isError
+          ? 'inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-rose-500/15 text-rose-300 border border-rose-500/30'
+          : 'inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30';
+      }
+
+      if (hintEl) {
+        if (errorDetail) {
+          hintEl.textContent = errorDetail;
+          hintEl.classList.remove('hidden');
+        } else {
+          hintEl.classList.add('hidden');
+        }
+      }
     }
 
     function openCloudModal() {
-      document.getElementById('cloud-db-url-input').value = cloudConfig.dbUrl || '';
+      document.getElementById('cloud-db-url-input').value = cloudConfig.dbUrl || DEFAULT_CLOUD_URL;
       document.getElementById('cloud-room-input').value = cloudConfig.room || DEFAULT_CLOUD_ROOM;
       document.getElementById('cloud-modal').classList.remove('hidden');
     }
@@ -761,8 +831,21 @@
       document.getElementById('cloud-modal').classList.add('hidden');
     }
 
+    function getComparableStateSignature(payload) {
+      return JSON.stringify({
+        stockData: payload.stockData || {},
+        notesData: payload.notesData || {},
+        activityLogs: payload.activityLogs || [],
+        tgChatId: (payload.tgConfig && payload.tgConfig.chatId) || '',
+        tgLastUpdateId: (payload.tgConfig && payload.tgConfig.lastUpdateId) || 0
+      });
+    }
+
     function applyRemotePayload(payload) {
       if (!payload || typeof payload !== 'object') return;
+      const incomingSig = getComparableStateSignature(payload);
+      if (incomingSig === lastCloudSnapshotJson) return;
+
       isApplyingRemoteCloud = true;
       try {
         stockData = payload.stockData && typeof payload.stockData === 'object' ? payload.stockData : {};
@@ -774,6 +857,7 @@
             tgConfig.lastUpdateId = payload.tgConfig.lastUpdateId;
           }
         }
+        lastCloudSnapshotJson = incomingSig;
         saveToLocalStorage(false);
         applyFilters();
         renderLogList();
@@ -798,6 +882,8 @@
         updatedAt: Date.now()
       };
 
+      const nextSig = getComparableStateSignature(payload);
+
       cloudWriteQueue = cloudWriteQueue.then(async () => {
         try {
           const res = await fetch(endpoint, {
@@ -805,11 +891,19 @@
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
           });
-          if (!res.ok) throw new Error('Cloud write failed');
-          updateCloudStatusUI('Live Team Sync', 'bg-emerald-400');
+          if (!res.ok) {
+            const errText = await res.text().catch(() => '');
+            throw new Error(`HTTP ${res.status}: ${errText || 'Permission or URL issue'}`);
+          }
+          lastCloudSnapshotJson = nextSig;
+          updateCloudStatusUI('Live Team Sync', 'bg-emerald-400', '');
         } catch (err) {
           console.error('Cloud push error:', err);
-          updateCloudStatusUI('Sync Error', 'bg-rose-400');
+          updateCloudStatusUI(
+            'Sync Error',
+            'bg-rose-400',
+            `Cloud Sync Error: ${err.message}. Firebase Realtime Database Rules-এ .read ও .write true আছে কি না এবং URL সঠিক কি না চেক করুন।`
+          );
         }
       });
 
@@ -817,28 +911,19 @@
     }
 
     async function pushLocalToCloud() {
-      const urlVal = document.getElementById('cloud-db-url-input').value.trim();
+      const urlVal = document.getElementById('cloud-db-url-input').value.trim() || DEFAULT_CLOUD_URL;
       const roomVal = document.getElementById('cloud-room-input').value.trim() || DEFAULT_CLOUD_ROOM;
-      if (!urlVal) {
-        alert('Firebase Realtime Database URL দিন।');
-        return;
-      }
       cloudConfig.dbUrl = urlVal;
       cloudConfig.room = roomVal;
       cloudConfig.enabled = true;
       await saveToLocalStorage(false);
       await syncStateToCloud();
       initCloudSync();
-      alert('লোকাল ডাটা ক্লাউডে পুশ করা হয়েছে!');
     }
 
     async function saveAndConnectCloud() {
-      const urlVal = document.getElementById('cloud-db-url-input').value.trim();
+      const urlVal = document.getElementById('cloud-db-url-input').value.trim() || DEFAULT_CLOUD_URL;
       const roomVal = document.getElementById('cloud-room-input').value.trim() || DEFAULT_CLOUD_ROOM;
-      if (!urlVal) {
-        alert('Firebase Realtime Database URL দিন।');
-        return;
-      }
       cloudConfig.dbUrl = urlVal;
       cloudConfig.room = roomVal;
       cloudConfig.enabled = true;
@@ -847,15 +932,46 @@
       closeCloudModal();
     }
 
-    function disableCloudSync() {
-      cloudConfig.enabled = false;
-      if (cloudEventSource) {
-        cloudEventSource.close();
-        cloudEventSource = null;
-      }
+    function resetCloudToDefault() {
+      cloudConfig.dbUrl = DEFAULT_CLOUD_URL;
+      cloudConfig.room = DEFAULT_CLOUD_ROOM;
+      cloudConfig.enabled = true;
+      document.getElementById('cloud-db-url-input').value = DEFAULT_CLOUD_URL;
+      document.getElementById('cloud-room-input').value = DEFAULT_CLOUD_ROOM;
       saveToLocalStorage(false);
-      updateCloudStatusUI();
-      closeCloudModal();
+      initCloudSync();
+    }
+
+    async function fetchCloudSnapshotOnce() {
+      const endpoint = getCloudEndpoint();
+      if (!endpoint) return;
+      try {
+        const res = await fetch(`${endpoint}?t=${Date.now()}`, { cache: 'no-store' });
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
+        const data = await res.json();
+        if (data && typeof data === 'object') {
+          applyRemotePayload(data);
+        } else {
+          // Initialize room if empty
+          const currentLocalHasData =
+            Object.keys(stockData).length > 0 ||
+            Object.keys(notesData).length > 0 ||
+            activityLogs.length > 0;
+          if (currentLocalHasData) {
+            await syncStateToCloud();
+          }
+        }
+        updateCloudStatusUI('Live Team Sync', 'bg-emerald-400', '');
+      } catch (err) {
+        console.error('Cloud fetch error:', err);
+        updateCloudStatusUI(
+          'Sync Error',
+          'bg-rose-400',
+          `Cloud Fetch Error: ${err.message}. Firebase Rules-এ .read: true, .write: true দেওয়া আছে কি না চেক করুন।`
+        );
+      }
     }
 
     function initCloudSync() {
@@ -863,48 +979,38 @@
         cloudEventSource.close();
         cloudEventSource = null;
       }
+      if (cloudPollTimer) {
+        clearInterval(cloudPollTimer);
+        cloudPollTimer = null;
+      }
+
       const endpoint = getCloudEndpoint();
       if (!endpoint) {
         updateCloudStatusUI();
         return;
       }
 
-      fetch(endpoint)
-        .then(r => r.json())
-        .then(data => {
-          if (data) {
-            applyRemotePayload(data);
-          } else {
-            syncStateToCloud();
-          }
-          updateCloudStatusUI('Live Team Sync', 'bg-emerald-400');
-        })
-        .catch(() => {
-          updateCloudStatusUI('Sync Error', 'bg-rose-400');
-        });
+      fetchCloudSnapshotOnce();
 
       try {
         cloudEventSource = new EventSource(endpoint);
-        cloudEventSource.addEventListener('put', (e) => {
-          try {
-            const parsed = JSON.parse(e.data);
-            if (parsed && parsed.path === '/' && parsed.data) {
-              applyRemotePayload(parsed.data);
-            } else if (parsed && parsed.path && parsed.path !== '/') {
-              fetch(endpoint).then(r => r.json()).then(full => {
-                if (full) applyRemotePayload(full);
-              });
-            }
-          } catch (err) {
-            console.error('SSE parse error:', err);
-          }
+        cloudEventSource.addEventListener('put', () => {
+          fetchCloudSnapshotOnce();
+        });
+        cloudEventSource.addEventListener('patch', () => {
+          fetchCloudSnapshotOnce();
         });
       } catch (err) {
         console.error('EventSource error:', err);
       }
+
+      // Reliable polling fallback every 4 seconds so all team members stay synced even behind strict proxies
+      cloudPollTimer = setInterval(() => {
+        fetchCloudSnapshotOnce();
+      }, 4000);
     }
 
-    // --- 6. COLOR LEGEND ---
+    // Render static color legend bar
     function renderColorLegend() {
       const container = document.getElementById('color-legend-container');
       container.innerHTML = COLORS.map(c => `
@@ -915,7 +1021,7 @@
       `).join('');
     }
 
-    // --- 7. STOCK GET/SET HELPERS ---
+    // --- 6. STOCK GET/SET HELPERS ---
     function getStock(code, size, colorName) {
       if (stockData[code] && stockData[code][size] && stockData[code][size][colorName] !== undefined) {
         return stockData[code][size][colorName];
@@ -972,7 +1078,7 @@
       return total;
     }
 
-    // --- 8. LOGGING & UNDO ---
+    // --- 7. LOGGING & UNDO ---
     function addLogEntry(entry) {
       entry.id = Date.now() + Math.random().toString(36).substr(2, 4);
       entry.timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
@@ -1027,6 +1133,7 @@
     function renderLogList() {
       const listContainer = document.getElementById('log-list');
       const btnUndo = document.getElementById('btn-undo');
+      
       if (btnUndo) btnUndo.disabled = activityLogs.length === 0;
 
       if (activityLogs.length === 0) {
@@ -1068,7 +1175,7 @@
       lucide.createIcons();
     }
 
-    // --- 9. FILTERING & SEARCH LOGIC ---
+    // --- 8. FILTERING & SEARCH LOGIC ---
     function applyFilters() {
       const query = document.getElementById('search-input').value.trim().toLowerCase();
       const stockStatus = document.getElementById('filter-stock-status').value;
@@ -1144,6 +1251,7 @@
         return;
       }
       const targetCode = `ANS-${val}`;
+      
       document.getElementById('search-input').value = '';
       document.getElementById('filter-stock-status').value = 'all';
       document.getElementById('filter-color').value = 'all';
@@ -1173,7 +1281,7 @@
       renderCurrentPageCards();
     }
 
-    // --- 10. CARD RENDERING ---
+    // --- 9. CARD RENDERING & UI GENERATION ---
     function renderCurrentPageCards() {
       const grid = document.getElementById('cards-grid');
       const totalFiltered = filteredCodes.length;
@@ -1221,7 +1329,11 @@
 
       return `
         <div id="card-${code}" class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden flex flex-col transition-all duration-200 hover:border-slate-700 shadow-md">
+          
+          <!-- Card Header & Image Bar -->
           <div class="p-3 bg-slate-950 border-b border-slate-800 flex items-start gap-3">
+            
+            <!-- Thumbnail Box -->
             <div class="relative w-16 h-16 rounded-lg bg-slate-900 border border-slate-800 overflow-hidden flex-shrink-0 group cursor-pointer" onclick="openImageModal('${code}')">
               <img id="thumb-${code}" src="" class="w-full h-full object-cover hidden">
               <div id="thumb-placeholder-${code}" class="w-full h-full flex flex-col items-center justify-center p-1 text-center bg-slate-900">
@@ -1233,11 +1345,14 @@
               </div>
             </div>
 
+            <!-- Code, Note & Stock Badge -->
             <div class="flex-1 min-w-0">
               <div class="flex items-center justify-between gap-1">
                 <span class="text-base font-extrabold text-white tracking-wide">${code}</span>
                 ${statusBadgeHtml}
               </div>
+              
+              <!-- Editable Custom Note -->
               <div class="mt-1 flex items-center gap-1">
                 <input 
                   type="text" 
@@ -1248,8 +1363,10 @@
                 >
               </div>
             </div>
+
           </div>
 
+          <!-- Size Selector Tabs -->
           <div class="p-2 bg-slate-900 border-b border-slate-800 flex items-center justify-between gap-1 overflow-x-auto">
             <div class="flex items-center gap-1">
               ${SIZES.map(sz => {
@@ -1274,6 +1391,7 @@
               }).join('')}
             </div>
 
+            <!-- Matrix View Toggle Button -->
             <button 
               onclick="toggleCardMatrix('${code}')"
               title="সব সাইজ একসাথে দেখুন"
@@ -1283,9 +1401,11 @@
             </button>
           </div>
 
+          <!-- Color Control Section -->
           <div class="p-3 flex-1 bg-slate-900 space-y-2">
             ${isMatrixView ? renderCardMatrixHtml(code) : renderCardSingleSizeColorsHtml(code, activeSize)}
           </div>
+
         </div>
       `;
     }
@@ -1301,16 +1421,21 @@
             const currentStock = getStock(code, size, color.name);
             return `
               <div class="flex items-center justify-between p-1.5 rounded-lg bg-slate-950 border border-slate-800 hover:border-slate-700 transition">
+                
+                <!-- Swatch & Color Name -->
                 <div class="flex items-center gap-2 min-w-0 flex-1">
                   <span class="w-3.5 h-3.5 rounded-full flex-shrink-0 ${color.border ? 'swatch-border' : ''}" style="background-color: ${color.hex}"></span>
                   <span class="text-xs font-medium text-slate-200 truncate">${color.name}</span>
                 </div>
 
+                <!-- Stock Counter Control -->
                 <div class="flex items-center gap-1 flex-shrink-0">
                   <button 
                     onclick="adjustStock('${code}', ${size}, '${color.name}', -1)"
                     class="w-6 h-6 rounded bg-slate-800 hover:bg-rose-900/60 hover:text-rose-300 text-slate-300 font-bold flex items-center justify-center text-xs transition"
-                  >-</button>
+                  >
+                    -
+                  </button>
 
                   <input 
                     type="number" 
@@ -1323,8 +1448,11 @@
                   <button 
                     onclick="adjustStock('${code}', ${size}, '${color.name}', 1)"
                     class="w-6 h-6 rounded bg-slate-800 hover:bg-emerald-900/60 hover:text-emerald-300 text-slate-300 font-bold flex items-center justify-center text-xs transition"
-                  >+</button>
+                  >
+                    +
+                  </button>
                 </div>
+
               </div>
             `;
           }).join('')}
@@ -1397,7 +1525,7 @@
       }
     }
 
-    // --- 11. STOCK UPDATE ACTIONS ---
+    // --- 10. STOCK UPDATE ACTIONS ---
     function adjustStock(code, size, colorName, delta, source = 'UI') {
       const current = getStock(code, size, colorName);
       setStock(code, size, colorName, current + delta, true, source);
@@ -1416,7 +1544,7 @@
       saveToLocalStorage(true);
     }
 
-    // --- 12. PAGINATION CONTROLS ---
+    // --- 11. PAGINATION CONTROLS RENDERING ---
     function renderPaginationControls(totalItems) {
       const totalPages = Math.ceil(totalItems / pageSize) || 1;
       const startItem = totalItems === 0 ? 0 : (currentPage - 1) * pageSize + 1;
@@ -1482,7 +1610,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // --- 13. KPI STATS ---
+    // --- 12. KPI STATS COMPUTATION ---
     function updateKPIs() {
       let totalPairs = 0;
       let lowStockCount = 0;
@@ -1504,7 +1632,7 @@
       document.getElementById('kpi-out-of-stock').textContent = outOfStockCount;
     }
 
-    // --- 14. IMAGE MODAL ---
+    // --- 13. IMAGE MODAL & THUMBNAIL MANAGEMENT ---
     async function loadCardImage(code) {
       const imgElem = document.getElementById(`thumb-${code}`);
       const placeholderElem = document.getElementById(`thumb-placeholder-${code}`);
@@ -1613,7 +1741,7 @@
       });
     }
 
-    // --- 15. EXPORT TO CSV ---
+    // --- 14. EXPORT TO EXCEL / CSV ---
     function exportToCSV() {
       let csvRows = [];
       csvRows.push(['Design Code', 'Custom Note', 'Size', 'Color', 'Stock Quantity'].join(','));
@@ -1652,7 +1780,7 @@
       document.body.removeChild(link);
     }
 
-    // --- 16. BACKUP & RESTORE JSON ---
+    // --- 15. BACKUP & RESTORE JSON ---
     function openBackupModal() {
       document.getElementById('backup-modal').classList.remove('hidden');
     }
@@ -1715,7 +1843,7 @@
       reader.readAsText(fileInput.files[0]);
     }
 
-    // --- 17. RESET ALL DATA ---
+    // --- 16. RESET ALL DATA ---
     function confirmResetAll() {
       if (confirm('⚠️ আপনি কি নিশ্চিত যে সমস্ত স্টক এবং নোট মুছে ফেলতে চান? (ডাটা ক্লিয়ার করার আগে ব্যাকআপ নিয়ে নিতে পারেন)')) {
         stockData = {};
@@ -1727,7 +1855,7 @@
       }
     }
 
-    // --- 18. TELEGRAM BOT INTEGRATION ---
+    // --- 17. TELEGRAM BOT INTEGRATION ---
     function openTelegramModal() {
       document.getElementById('tg-token-input').value = tgConfig.token || DEFAULT_TG_TOKEN;
       document.getElementById('tg-chat-id-input').value = tgConfig.chatId || '';
@@ -1895,6 +2023,9 @@
 
       isSyncingTelegram = true;
       try {
+        // Pull latest cloud state before applying bot updates so we don't overwrite another team member's change
+        await fetchCloudSnapshotOnce();
+
         const offsetParam = tgConfig.lastUpdateId ? `?offset=${tgConfig.lastUpdateId + 1}&timeout=0` : '?timeout=0';
         const res = await fetch(`https://api.telegram.org/bot${token}/getUpdates${offsetParam}`);
         const data = await res.json();
@@ -1982,6 +2113,7 @@
       }
     }
 
+    // Helper HTML escaper
     function escapeHtml(str) {
       return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
     }
